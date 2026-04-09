@@ -1,0 +1,180 @@
+SQL> CREATE TABLE DEPOSIT(
+  2  ACTNO NUMBER(5),
+  3  CNAME VARCHAR2(10),
+  4  BNAME VARCHAR2(15),
+  5  AMOUNT NUMBER(10),
+  6  ADATE DATE
+  7  );
+
+Table created.
+
+SQL> INSERT INTO DEPOSIT VALUES(100,'ANIL','VRCE',1000.00,'01-MAR-95');
+
+1 row created.
+
+SQL>  INSERT INTO DEPOSIT VALUES(101,'SUNIL','AJNI',5000.00,'04-JAN-96');
+
+1 row created.
+
+SQL>  INSERT INTO DEPOSIT VALUES(102,'MEHUL','KAROLBAGH',3500.00,'17-NOV-95');
+
+1 row created.
+
+SQL>  INSERT INTO DEPOSIT VALUES(104,'MADHURI','CHANDI',1200.00,'17-DEC-95');
+
+1 row created.
+
+SQL>  INSERT INTO DEPOSIT VALUES(105,'PRMOD','M G ROAD',3000.00,'27-MAR-96');
+
+1 row created.
+
+SQL>  INSERT INTO DEPOSIT VALUES(106,'SANDIP','ANDHERI',2000.00,'31-MAR-96');
+
+1 row created.
+
+SQL>  INSERT INTO DEPOSIT VALUES(107,'SHIVANI','VIRAR',1000.00,'05-SEP-95');
+
+1 row created.
+
+SQL>  INSERT INTO DEPOSIT VALUES(100,'KRANTI','NEHRU PLACE',5000.00,'02-JUL-95');
+
+1 row created.
+
+SQL>  INSERT INTO DEPOSIT VALUES(109,'MINU','POWAI',7000.00,'10-AUG-95');
+
+1 row created.
+
+SQL> SELECT*FROM DEPOSIT;
+
+     ACTNO CNAME      BNAME               AMOUNT ADATE                          
+---------- ---------- --------------- ---------- ---------                      
+       100 ANIL       VRCE                  1000 01-MAR-95                      
+       101 SUNIL      AJNI                  5000 04-JAN-96                      
+       102 MEHUL      KAROLBAGH             3500 17-NOV-95                      
+       104 MADHURI    CHANDI                1200 17-DEC-95                      
+       105 PRMOD      M G ROAD              3000 27-MAR-96                      
+       106 SANDIP     ANDHERI               2000 31-MAR-96                      
+       107 SHIVANI    VIRAR                 1000 05-SEP-95                      
+       100 KRANTI     NEHRU PLACE           5000 02-JUL-95                      
+       109 MINU       POWAI                 7000 10-AUG-95                      
+
+9 rows selected.
+
+SQL> SELECT ACTNO,AMOUNT FROM DEPOSIT;
+
+     ACTNO     AMOUNT                                                           
+---------- ----------                                                           
+       100       1000                                                           
+       101       5000                                                           
+       102       3500                                                           
+       104       1200                                                           
+       105       3000                                                           
+       106       2000                                                           
+       107       1000                                                           
+       100       5000                                                           
+       109       7000                                                           
+
+9 rows selected.
+
+SQL> CREATE TABLE CUSTOMERS(
+  2  CNAME VARCHAR2(10),
+  3  CITY VARCHAR2(15)
+  4  );
+
+Table created.
+
+SQL> INSERT INTO CUSTOMERS VALUES('ANIL','CALCUTTA');
+
+1 row created.
+
+SQL> INSERT INTO CUSTOMERS VALUES('SUNIL','DEHLI');
+
+1 row created.
+
+SQL> INSERT INTO CUSTOMERS VALUES('MEHUL','BARODA');
+
+1 row created.
+
+SQL> INSERT INTO CUSTOMERS VALUES('MANDAR','PATNA');
+
+1 row created.
+
+SQL> INSERT INTO CUSTOMERS VALUES('MADHURI','NAGPUR');
+
+1 row created.
+
+SQL> INSERT INTO CUSTOMERS VALUES('PRAMOD','NAGPUR');
+
+1 row created.
+
+SQL> INSERT INTO CUSTOMERS VALUES('SANDIP','SURAT');
+
+1 row created.
+
+SQL> INSERT INTO CUSTOMERS VALUES('SHIVANI','BOMBAY');
+
+1 row created.
+
+SQL> INSERT INTO CUSTOMERS VALUES('KRANTI','BOMBAY');
+
+1 row created.
+
+SQL> INSERT INTO CUSTOMERS VALUES('NAREN','BOMBAY');
+
+1 row created.
+
+SQL> CREATE TABLE ITEM_MASTER(
+  2  ID VARCHAR2(5),
+  3  NAME VARCHAR2(10),
+  4  TYPE VARCHAR2(10),
+  5  PRICE NUMBER(8),
+  6  QUALITY VARCHAR(20)
+  7  ITEM_PACK_DATE
+  8  );
+ITEM_PACK_DATE
+*
+ERROR at line 7:
+ORA-00907: missing right parenthesis 
+
+
+SQL> CREATE ITEM_MASTER(
+  2  ID VARCHAR2(5),
+  3  NAME VARCHAR2(10),
+  4  TYPE VARCHAR2(10),
+  5  PRICE NUMBER(8),
+  6  QUALITY VARCHAR2(20),
+  7  ITEM_PACK_DATE DATE
+  8  );
+CREATE ITEM_MASTER(
+       *
+ERROR at line 1:
+ORA-00901: invalid CREATE command 
+
+
+SQL> CREATE TABLE ITEM_MASTER(
+  2  ID VARCHAR2(5),
+  3  NAME VARCHAR2(10),
+  4  TYPE VARCHAR2(10),
+  5  PRICE NUMBER(8),
+  6  QUALITY VARCHAR2(20),
+  7  ITEM_PACK_DATE DATE
+  8  );
+
+Table created.
+
+SQL> INSERT INTO ITEM_MASTER VALUES('I1','DAIRYMILK','CHOCOLATE',500,'12-AUG-2000');
+INSERT INTO ITEM_MASTER VALUES('I1','DAIRYMILK','CHOCOLATE',500,'12-AUG-2000')
+            *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> INSERT INTO ITEM_MASTER VALUES('I1','DAIRYMILK','CHOCOLATE',500,'GOOD','12-AUG-2000');
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> spool off;
