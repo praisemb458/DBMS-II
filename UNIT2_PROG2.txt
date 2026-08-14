@@ -1,0 +1,59 @@
+DECLARE
+
+   CURSOR c_emp IS
+      SELECT empno, sal
+      FROM emp
+      WHERE deptno = 20
+      FOR UPDATE OF sal;
+
+   v_empno      emp.empno%TYPE;
+   v_old_sal    emp.sal%TYPE;
+   v_new_sal    emp.sal%TYPE;
+   v_count      NUMBER := 0;
+BEGIN
+   
+   OPEN c_emp;
+
+   
+   IF c_emp%ISOPEN THEN
+      DBMS_OUTPUT.PUT_LINE('Explicit cursor c_emp is successfully OPEN.');
+   END IF;
+
+   LOOP
+      FETCH c_emp INTO v_empno, v_old_sal;
+
+      EXIT WHEN c_emp%NOTFOUND;
+
+      v_count   := v_count + 1;
+      v_new_sal := v_old_sal * 1.05;
+      
+      UPDATE emp
+      SET sal = v_new_sal
+      WHERE CURRENT OF c_emp;
+
+      INSERT INTO emp_update (empno, old_sal, new_sal, update_date)
+      VALUES (v_empno, v_old_sal, v_new_sal, SYSDATE);
+
+      DBMS_OUTPUT.PUT_LINE('Updated Salary for Emp #' || v_empno || 
+                           ': ' || v_old_sal || ' -> ' || v_new_sal);
+   END LOOP;
+
+   IF v_count = 0 THEN
+      DBMS_OUTPUT.PUT_LINE('No employee records found in Department 20.');
+   ELSE
+      DBMS_OUTPUT.PUT_LINE('Total records updated and logged: ' || v_count);
+   END IF;
+
+   IF c_emp%ISOPEN THEN
+      CLOSE c_emp;
+      DBMS_OUTPUT.PUT_LINE('Explicit cursor c_emp is now CLOSED.');
+   END IF;
+
+EXCEPTION
+   WHEN OTHERS THEN
+      IF c_emp%ISOPEN THEN
+         CLOSE c_emp;
+      END IF;
+      RAISE;
+END;
+/
