@@ -1,0 +1,30 @@
+DECLARE
+
+    v_dept_no     NUMBER := &department_number;
+    v_row_count   NUMBER := 0;
+    NO_DEPT_FOUND EXCEPTION;
+    
+    CURSOR c_emp IS 
+        SELECT * FROM emp WHERE deptno = v_dept_no;
+
+BEGIN
+    FOR r_emp IN c_emp LOOP
+        INSERT INTO emp_backup VALUES r_emp;
+        v_row_count := v_row_count + 1;
+    END LOOP;
+
+    IF v_row_count = 0 THEN
+        RAISE NO_DEPT_FOUND;
+    END IF;
+    
+    COMMIT;
+
+EXCEPTION
+    WHEN NO_DEPT_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('Exception: No records found for the entered DEPT_NO.');
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+        ROLLBACK;
+
+END;
+/
