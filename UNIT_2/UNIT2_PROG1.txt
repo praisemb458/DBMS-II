@@ -1,0 +1,28 @@
+SET SERVEROUTPUT ON;
+
+DECLARE
+
+    v_target_dept emp.deptno%TYPE := 10;
+    v_rows_updated NUMBER := 0;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('-------------------------------------------');
+    DBMS_OUTPUT.PUT_LINE('Starting salary update for Dept ' || v_target_dept || '...');
+
+    UPDATE emp
+    SET sal = sal * 1.10
+    WHERE deptno = v_target_dept;
+
+    v_rows_updated := SQL%ROWCOUNT;
+
+   
+    IF v_rows_updated > 0 THEN
+        DBMS_OUTPUT.PUT_LINE('Success: ' || v_rows_updated || ' employee(s) in Department ' || v_target_dept || ' received a 10% salary raise.');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Notice: No employee records found in Department ' || v_target_dept || '. No salaries were updated.');
+    END IF;
+
+    COMMIT;
+    
+    DBMS_OUTPUT.PUT_LINE('-------------------------------------------');
+END;
+/
