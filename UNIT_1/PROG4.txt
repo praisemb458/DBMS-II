@@ -1,0 +1,25 @@
+DECLARE
+ Input variable
+    v_feet   NUMBER := &enter measurement in feet;
+    
+ Variables to hold conversions
+    v_inch   NUMBER;
+    v_cm     NUMBER;
+    v_meter  NUMBER;
+BEGIN
+   1 foot = 12 inches
+    v_inch  := v feet * 12;
+    
+   1 inch = 2.54 cm
+    v_cm    := v inch * 2.54;
+    
+   1 meter = 100 cm
+    v_meter := v cm / 100;
+
+   Displaying the results
+    DBMS_OUTPUT.PUT_LINE('--- Conversions for ' || v feet || ' feet ---');
+    DBMS_OUTPUT.PUT_LINE('Inches: ' || ROUND(v_inch, 2) || ' in');
+    DBMS_OUTPUT.PUT_LINE('Centimeters: ' || ROUND(v_cm, 2) || ' cm');
+    DBMS_OUTPUT.PUT_LINE('Meters: ' || ROUND(v_meter, 2) || ' m');
+END;
+/
