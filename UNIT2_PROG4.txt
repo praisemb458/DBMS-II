@@ -1,0 +1,30 @@
+SET SERVEROUTPUT ON;
+
+DECLARE
+
+   CURSOR c_top_emp IS
+      SELECT emp_name, basic_salary
+      FROM employees
+      ORDER BY basic_salary DESC
+      FETCH FIRST 3 ROWS ONLY;
+      
+   v_rank NUMBER := 0;
+BEGIN
+
+   FOR r_emp IN c_top_emp LOOP
+      v_rank := v_rank + 1;
+      DBMS_OUTPUT.PUT_LINE('Rank ' || v_rank);
+      DBMS_OUTPUT.PUT_LINE('  Name   : ' || r_emp.emp_name);
+      DBMS_OUTPUT.PUT_LINE('  Salary : $' || TO_CHAR(r_emp.basic_salary, '123,456'));
+
+   END LOOP;
+   
+   IF v_rank = 0 THEN
+      DBMS_OUTPUT.PUT_LINE('No records found in the employees table.');
+   END IF;
+   
+EXCEPTION
+   WHEN OTHERS THEN
+      DBMS_OUTPUT.PUT_LINE('An unexpected error occurred: ' || SQLERRM);
+END;
+/
