@@ -1,0 +1,23 @@
+DECLARE
+
+   v_emp_id   employees.employee_id%TYPE := 9999; -- An ID that does not exist
+   v_emp_name employees.first_name%TYPE;
+
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('Searching for employee with ID: ' || v_emp_id);
+
+   SELECT first_name
+   INTO v_emp_name
+   FROM employees
+   WHERE employee_id = v_emp_id;
+
+   DBMS_OUTPUT.PUT_LINE('Employee Found: ' || v_emp_name);
+
+EXCEPTION
+   WHEN NO_DATA_FOUND THEN
+      DBMS_OUTPUT.PUT_LINE('Handling Exception: No employee found with ID ' || v_emp_id);
+   WHEN OTHERS THEN
+      DBMS_OUTPUT.PUT_LINE('An unexpected error occurred: ' || SQLERRM);
+
+END;
+/
